@@ -5,6 +5,7 @@ import pandas as pd
 import streamlit as st
 import os
 from google.cloud import bigquery
+from google.cloud import storage
 
 #pip install protobuf==3.20.*
 
@@ -26,9 +27,15 @@ df = query_job.to_dataframe()
 # Esta una app de demostración realizada con la libreria StreamLit. Esta app se puede desplegar en contenedores de forma local asi como en la nube.
 """
 c=st.empty()
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'shiny-apps-385622-0553170e693d.json'
+
+storage_client = storage.Client()
+bucket = storage_client.bucket("imagenes_app_uss")
+blob = bucket.blob("uss.png")
+blob.download_to_filename("uss_GCS.png")
         
-        
-c.image("uss.png")
+c.image("uss_GCS.png")
 
 st.dataframe(df)
 

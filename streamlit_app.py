@@ -8,13 +8,18 @@ from google.cloud import bigquery
 
 #pip install protobuf==3.20.*
 
+# Aca se define el token para acceder al servicio Bigquery en GCP
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'shiny-apps-385622-08e5b9820326.json'
 
+#Aca se define un cliente para realizar luego la consulta SQL
 client = bigquery.Client()
 
+#Esta es la consulta SQL que se realiza(es la misma que hacemos en R)
 query = """   SELECT * from `bigquery-public-data.austin_bikeshare.bikeshare_trips` LIMIT 10 """
 
+#Aqui se hace la consulta a BigQuery
 query_job = client.query(query)
+#Aqui se transforma la consulta en un dataframe
 df = query_job.to_dataframe()
 
 """
